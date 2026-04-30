@@ -1,17 +1,31 @@
-//
-//  PowerWattsApp.swift
-//  PowerWatts
-//
-//  Created by Ramirez Ramos, Jesus (A-GIIB-OO) on 16/2/26.
-//
-
 import SwiftUI
+import AppKit
 
 @main
 struct PowerWattsApp: App {
+
+    @StateObject private var powerMonitor = PowerMonitor()
+
     var body: some Scene {
-        WindowGroup {
-            ContentView()
+        MenuBarExtra {
+            if let watts = powerMonitor.wattage {
+                Text("Charging: \(watts)W")
+            } else {
+                Text("Not charging")
+            }
+
+            Divider()
+
+            Button("Quit PowerWatts") {
+                NSApplication.shared.terminate(nil)
+            }
+            .keyboardShortcut("q")
+        } label: {
+            if let watts = powerMonitor.wattage {
+                Text("⚡\(watts)W")
+            } else {
+                Text("⚡")
+            }
         }
     }
 }
