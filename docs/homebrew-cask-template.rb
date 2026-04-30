@@ -8,4 +8,9 @@ cask "powerwatts" do
   homepage "https://github.com/KashaMalaga/PowerWatts"
 
   app "PowerWatts.app"
+
+  caveats <<~EOS
+    PowerWatts is ad-hoc signed and not notarized. If macOS blocks the first launch, run:
+      xattr -d com.apple.quarantine /Applications/PowerWatts.app
+  EOS
 end

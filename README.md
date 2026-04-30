@@ -30,6 +30,12 @@ VERSION=1.0.1 ./scripts/package_release.sh
 
 Because this app is not signed with an Apple Developer ID and is not notarized, macOS may block it the first time it is opened. Users can still run it by allowing the app in System Settings > Privacy & Security, or by using Finder's Open context menu.
 
+If macOS still shows "Apple could not verify PowerWatts.app is free of malware", remove the quarantine attribute after installing:
+
+```sh
+xattr -d com.apple.quarantine /Applications/PowerWatts.app
+```
+
 ## Optional Homebrew Tap
 
 Official Homebrew Cask usually expects apps to pass Gatekeeper. Without Developer ID signing and notarization, use your own tap:
@@ -52,6 +58,11 @@ cask "powerwatts" do
   homepage "https://github.com/KashaMalaga/PowerWatts"
 
   app "PowerWatts.app"
+
+  caveats <<~EOS
+    PowerWatts is ad-hoc signed and not notarized. If macOS blocks the first launch, run:
+      xattr -d com.apple.quarantine /Applications/PowerWatts.app
+  EOS
 end
 ```
 
